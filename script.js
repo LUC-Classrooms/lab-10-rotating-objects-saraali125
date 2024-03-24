@@ -1,11 +1,3 @@
-/*
-LAB 10 - Add Rotation to an object
-
-Study the example posted this week under rotating objects and reconstruct some of its functionality.
-
-Specifically, add some code to the display() method that will create a new layer, translate to the correct x/y location, and rotate the image by the value of this.angle
-*/
-
 var obj1, obj2; // create variables to contain objects
 
 function setup() {
@@ -32,15 +24,14 @@ function draw() {
 
   if(mouse1 < 50) { // first, see if the mouse is within range
     if(mouseIsPressed){
-      // spin object 1 by calling its spin() method
-      // you will have to create that method inside the myClass constructor ...
+      obj1.spin(0.05); // spin object 1 by calling its spin() method
     } else {
       obj1.reset(); // the reset function is done for you
     }
   }
   if(mouse2 < 50) {
     if(mouseIsPressed){
-      // spin object 2 by calling its spin() method
+      obj2.spin(-0.03); // spin object 2 by calling its spin() method
     } else {
       obj2.reset();
     }
@@ -64,6 +55,9 @@ function myClass(tempX, tempY){
   Create a spin method here. Look at the reset() method below and the spin() method from the Sakai example for this week.
   the function assigned to this.spin should take a number argument; that number should be _added_ to the value of this.angle. The reset() method sets this.angle back to 0, and this.scale back to 1
   */
+  this.spin = function(speed){
+    this.angle += speed;
+  }
   
   this.reset = function(){
       this.angle = 0;
@@ -71,19 +65,15 @@ function myClass(tempX, tempY){
   }
   
   this.display = function(){
-/*
-  Make some significant changes here. Remember to push(), translate(), and rotate() before drawing. Don't forget to pop() afterwards!
-  
-  Also, when you translate, remember that it will affect where the rect() appears. Change the location arguments to rect(0, 0, this.diam, this.diam)!
-  
-  The argument to rotate() should be "this.angle", which is affected by the spin() and reset() methods
-*/
+    push(); // create a new layer
+    translate(this.x, this.y); // move the origin point to the object's x and y location
+    rotate(this.angle); // rotate the image around the new origin point using the object's angle property
     
     fill(this.color);
     rectMode(CENTER);
-    // change the location to 0, 0
-    rect(this.x, this.y, this.diam, this.diam);
+    rect(0, 0, this.diam, this.diam); // draw the image with x and y positions at 0
     
+    pop(); // reset the layer
   }
   
 }
